@@ -1,0 +1,82 @@
+.logo {
+  width: 200px;
+  height: 30px;
+}
+.brand {
+  flex-basis: 40%;
+}
+.btn1 {
+  background-color: transparent;
+  border-radius: 0px;
+  border: 1px solid #fff;
+  font-size: 18px;
+  padding: 2px 14px;
+  margin-right: 10px;
+  color: #fff;
+  font-family: "Lato", sans-serif;
+}
+.btn2 {
+  background-color: #feac32;
+  border: 1px solid #feac32;
+  background-image: linear-gradient(#fecc4c, #ffac33);
+  color: #000;
+  font-family: "Roboto Mono", monospace;
+  border-radius: 0px;
+  font-size: 18px;
+  padding: 2px 14px;
+}
+.form {
+  flex-basis: 32%;
+}
+.searchbar {
+  background-color: #3b3b4f;
+  color: #fff;
+  width: 100%;
+  max-width: 500px;
+}
+.input {
+  background-color: #3b3b4f;
+  border: none;
+  font-size: 18px;
+  width: calc(100% - 40px);
+  color: #fff;
+}
+
+.input:focus {
+  outline: none;
+}
+
+::placeholder {
+  font-size: 18px;
+  color: #bbb;
+}
+
+.searchBtn {
+  background-color: #3b3b4f;
+  border: none;
+  color: #ccc;
+  font-size: 20px;
+}
+.avatar {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 960px) {
+  .form {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .logo {
+    height: 20px;
+  }
+  .btn1 {
+    padding: 0 6px 3px 6px;
+    font-size: 16px;
+  }
+  .btn2 {
+    font-size: 15px;
+  }
+}
