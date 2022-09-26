@@ -4,22 +4,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { signupUser, googleSignup } from "../../Reducers/authReducer";
 import { GoogleLogin } from "@react-oauth/google";
+import Form from "react-bootstrap/Form";
+import { Formik } from "formik";
+import * as yup from "yup";
+
+let schema = yup.object().shape({
+  name: yup.string().required("Name is required"),
+  email: yup
+    .string()
+    .email("Enter a valid email")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password should have atleast 8 characters"),
+  // .test(
+  //   "len",
+  //   "Length of password should be at least 8",
+  //   (val) => val.length >= 8
+  // ),
+});
 
 const Signup = (props) => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  // const [name, setName] = useState();
+  // const [email, setEmail] = useState();
+  // const [password, setPassword] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const error = useSelector((state) => state.auth.signupError);
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const submitHandler = (values) => {
+    //e.preventDefault();
     dispatch(
       signupUser({
-        name,
-        email,
-        password,
+        ...values,
       })
     );
   };
@@ -47,37 +65,73 @@ const Signup = (props) => {
         }}
       />
       <h4 className="mt-3 mb-3">OR</h4>
-      <form
+      <Formik
+        validationSchema={schema}
         onSubmit={submitHandler}
-        className="d-flex"
-        style={{ flexDirection: "column" }}
+        initialValues={{
+          name: "",
+          email: "",
+          password: "",
+        }}
       >
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="name"
-          className={classes.input}
-        />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="email"
-          className={classes.input}
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="password"
-          className={classes.input}
-        />
-        {error && <p className={classes.error}>{error}</p>}
-        <button type="submit" className={classes.btn}>
-          Signin
-        </button>
-      </form>
+        {({
+          handleSubmit,
+          handleChange,
+          handleBlur,
+          values,
+          touched,
+          isValid,
+          errors,
+        }) => (
+          <Form
+            noValidate
+            onSubmit={handleSubmit}
+            className="d-flex"
+            style={{ flexDirection: "column" }}
+          >
+            <input
+              type="text"
+              placeholder="name"
+              className={classes.input}
+              name="name"
+              value={values.name}
+              onChange={handleChange}
+              isValid={touched.firstName && !errors.firstName}
+            />
+            {errors.name && touched.name && (
+              <div className={classes.errorInput}>{errors.name}</div>
+            )}
+            <input
+              type="email"
+              placeholder="email"
+              className={classes.input}
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+              isValid={touched.firstName && !errors.firstName}
+            />
+            {errors.email && touched.email && (
+              <div className={classes.errorInput}>{errors.email}</div>
+            )}
+            <input
+              type="password"
+              placeholder="password"
+              className={classes.input}
+              name="password"
+              value={values.password}
+              onChange={handleChange}
+              isValid={touched.firstName && !errors.firstName}
+            />
+            {errors.password && touched.password && (
+              <div className={classes.errorInput}>{errors.password}</div>
+            )}
+            {error && <p className={classes.error}>{error}</p>}
+            <button type="submit" className={classes.btn}>
+              Signin
+            </button>
+          </Form>
+        )}
+      </Formik>
     </main>
   );
 };

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { URL } from "./../config";
 
 const initialState = {
   signupLoading: false,
@@ -13,7 +14,7 @@ const initialState = {
 export const signupUser = createAsyncThunk(
   "auth/signup",
   async (data, { rejectWithValue }) => {
-    const url = `http://127.0.0.1:5000/api/user/signup`;
+    const url = `${URL}/api/user/signup`;
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +43,7 @@ export const googleSignup = createAsyncThunk(
     try {
       const response = await axios({
         method: "POST",
-        url: `http://127.0.0.1:5000/api/user/googlesignup`,
+        url: `${URL}/api/user/googlesignup`,
         data: { idToken },
       });
       console.log(response);
@@ -80,6 +81,7 @@ const authSlice = createSlice({
       state.signupLoading = false;
       state.signupError =
         action.payload || "You couldn't be registered. Try again.";
+      // if(action.payload.startsWith('User validation'))
       state.token = "";
       state.isLoggedIn = false;
       console.log(action.error);

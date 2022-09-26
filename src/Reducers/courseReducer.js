@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { URL } from "../config";
 const initialState = {
   loading: false,
   courses: [],
@@ -9,7 +10,7 @@ const initialState = {
 export const getCourses = createAsyncThunk(
   "courses/get",
   async (data, { rejectWithValue }) => {
-    const url = `http://127.0.0.1:5000/api/courses`;
+    const url = `${URL}/api/courses`;
 
     try {
       const response = await axios.get(url, data);
