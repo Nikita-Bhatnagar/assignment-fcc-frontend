@@ -23,7 +23,7 @@ export const signupUser = createAsyncThunk(
 
     try {
       const response = await axios.post(url, data, config);
-      console.log(response);
+
       localStorage.setItem(
         "fcctoken",
         JSON.stringify(response.data.user.token)
@@ -31,7 +31,6 @@ export const signupUser = createAsyncThunk(
 
       return response.data.user.token;
     } catch (err) {
-      console.log(err);
       return rejectWithValue(err.response.data.message);
     }
   }
@@ -46,12 +45,11 @@ export const googleSignup = createAsyncThunk(
         url: `${URL}/api/user/googlesignup`,
         data: { idToken },
       });
-      console.log(response);
+
       localStorage.setItem("fcctoken", JSON.stringify(response.data.token));
 
       return response.data.token;
     } catch (err) {
-      console.log(err);
       return rejectWithValue(err.response.data.message);
     }
   }
@@ -81,11 +79,9 @@ const authSlice = createSlice({
       state.signupLoading = false;
       state.signupError =
         action.payload || "You couldn't be registered. Try again.";
-      // if(action.payload.startsWith('User validation'))
+
       state.token = "";
       state.isLoggedIn = false;
-      console.log(action.error);
-      console.log(action.payload);
     },
     [googleSignup.pending]: (state, action) => {
       state.signupLoading = true;
@@ -101,8 +97,6 @@ const authSlice = createSlice({
         action.payload || "You couldn't be registered. Try again.";
       state.token = "";
       state.isLoggedIn = false;
-      console.log(action.error);
-      console.log(action.payload);
     },
   },
 });

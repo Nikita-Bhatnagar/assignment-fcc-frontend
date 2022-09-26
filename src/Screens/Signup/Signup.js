@@ -18,23 +18,14 @@ let schema = yup.object().shape({
     .string()
     .required("Password is required")
     .min(8, "Password should have atleast 8 characters"),
-  // .test(
-  //   "len",
-  //   "Length of password should be at least 8",
-  //   (val) => val.length >= 8
-  // ),
 });
 
 const Signup = (props) => {
-  // const [name, setName] = useState();
-  // const [email, setEmail] = useState();
-  // const [password, setPassword] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const error = useSelector((state) => state.auth.signupError);
   const submitHandler = (values) => {
-    //e.preventDefault();
     dispatch(
       signupUser({
         ...values,
@@ -45,9 +36,9 @@ const Signup = (props) => {
   const responseGoogleSuccess = async (response) => {
     dispatch(googleSignup(response.credential));
   };
-  const responseGoogleError = (response) => {
-    console.log(response);
-  };
+  // const responseGoogleError = (response) => {
+  //   console.log(response);
+  // };
 
   useEffect(() => {
     if (isLoggedIn) navigate("/courses", { replace: true });
@@ -60,9 +51,7 @@ const Signup = (props) => {
       <GoogleLogin
         className={classes.googleLogin}
         onSuccess={responseGoogleSuccess}
-        onError={() => {
-          console.log("Login Failed");
-        }}
+        onError={() => {}}
       />
       <h4 className="mt-3 mb-3">OR</h4>
       <Formik

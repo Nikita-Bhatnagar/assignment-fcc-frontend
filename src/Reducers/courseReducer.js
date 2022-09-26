@@ -14,11 +14,9 @@ export const getCourses = createAsyncThunk(
 
     try {
       const response = await axios.get(url, data);
-      console.log(response);
 
       return response.data.data;
     } catch (err) {
-      console.log(err);
       return rejectWithValue(err.response.data.message);
     }
   }
@@ -38,9 +36,6 @@ const courseSlice = createSlice({
     [getCourses.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload || "Something went wrong.";
-
-      console.log(action.error);
-      console.log(action.payload);
     },
   },
 });

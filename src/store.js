@@ -4,7 +4,6 @@ import { reducer as courseReducer } from "./Reducers/courseReducer";
 
 const store = configureStore({
   reducer: {
-    //products: productsReducer,
     auth: authReducer,
     course: courseReducer,
   },
